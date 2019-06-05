@@ -1,0 +1,388 @@
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dodaj_przepis' %}">Stwórz przepis</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container" id="viewRecipe">
+    <div class="row">
+        <div class="col-12 header text-center">
+            <h1>Baza przepisów</h1>
+        </div>
+    </div>
+    <section>
+            <div class="row recipea">
+                <div class="col-4 recImg">
+                    <a href="Strona_glowna.html">
+                        <img src="http://127.0.0.1:8000/{{ przepis.obraz }}"/>
+                    </a>
+                </div>
+                <div class="col-8 recContent">
+                    <a href="Strona_glowna.html">
+                    <h3>{{ przepis.nazwa }}</h3>
+                    </a>
+                    <p>{{ przepis.opis }}</p>
+                    <a href="{% url 'moje_konto' %}">
+                        <em>{{ przepis.author }}</em>
+                    </a>
+                    <form method="POST">
+                    {% csrf_token %}
+                    <button id="Przycisk" name=
+                                {% if testowy == 1 %}
+                                    "edit2"
+                                {% else %}
+                                    "edit"
+                                {% endif %}
+
+                            value=
+                                {% if aktiv == 1 %}
+                                    {{ przepis.edycja }}
+                                {% else %}
+                                    {{ przepis.id }}
+                                {% endif %}
+                    >Edytuj</button>
+                    {% if aktiv == 1 %}
+                        <button name="delete" value={{ przepis.id }}>Usuń</button>
+                    {% endif %}
+                 </form>
+                </div>
+            </div>
+    </section>
+</div>
+{% endblock %}
+
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container-fluid text-center" id="creator">
+    <form class="tworzenie_przepisow" method="POST" action="" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <h1>Stwórz przepis</h1>
+                    <p>W tej zakładce możesz stworzyć przepis podzielić się nim z innymi!</p>
+                </div>
+            </div>
+            <div class="recipe">
+                        <img src="https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"/>
+                <div class="row">
+                    <div class="col-12 recipeName">
+                        <label>
+                            {{przepis_form.nazwa}}
+                        </label>
+                    </div>
+                </div>
+                {{ formset.management_form }}
+                    {% for form in formset %}
+                        <div class="row" id="parent_ing">
+                            <div class="col-4 ing">
+                                <div class="row form-row spacer">
+                                    <label>{{form.skladnik.label_tag}}</label>
+                                    <label>
+                                        <select name="grupa" required id="id_grupa0" onchange="obsluga(this.id,'id_pip0')">
+                                            {% for field in form2.grupa %}
+                                                <option value="{{ field|striptags }}">
+                                                    {{ field|striptags }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <select name="form-0-skladnik" id="id_pip0"></select>
+
+                                    </label>
+                                    {{form.ilosc.label_tag}}
+                                    {% for field in form.ilosc %}
+                                        {{ field }}
+                                    {% endfor %}
+                                    <select name="form-0-waga" id="id_waga">
+                                       {% for field in form.waga %}
+                                            {{ field }}
+                                        {% endfor %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success add-form-row">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="add">Dodaj</button>
+                    {% endfor %}
+            </div>
+            <div class="file">
+                <h3>Dodaj zdjęcie dania</h3>
+                <input type="file" name="obraz" accept="image/*" id="id_obraz" onchange="wys_img(this.id)">
+            </div>
+        </section>
+        {% for field in przepis_form %}
+            {{ field.errors|striptags }}
+        {% endfor %}
+        {% for field in przepis_form_test %}
+            {{ field.errors|striptags }}
+        {% endfor %}
+        <article>
+            <label>
+                <h2>A teraz napisz instrukcję jak zrobić to pyszne danie!</h2>
+                {{przepis_form.opis}}
+            </label>
+        </article>
+        <img src="https://www.wcrf-uk.org/sites/default/files/Onion%20A-Z%20Veg20.jpg"/>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript" >
+var tab = [];
+var i;
+var licznik;
+for(i=0;i<20;i++){
+    if (i===0){
+        tab[i]=[i,"TF"];
+    }
+    else {
+        tab[i]=[i,"True"];
+    }
+}
+
+function wys_img(s1){
+    var x = document.getElementById("obrazek");
+    if (x === null){
+        var x = document.createElement("img");
+    }
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById("id_obraz").files[0];
+    var reader = new FileReader();
+    x.src = s2;
+    x.id = "obrazek";
+    x.style.height = "200px";
+    x.style.position = "static";
+    $(s1).before(x);
+
+    reader.addEventListener("load", function () {
+        x.src = reader.result;
+    }, false);
+    if(s2){
+        reader.readAsDataURL(s2);
+    }
+}
+
+function obsluga(s1,s2) {
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById(s2);
+    s2.innerHTML = "";
+    if(s1.value == "Bakalie"){
+        var optionArray = {{ lista_Bakalie|safe }};
+    }
+    else if(s1.value == "Jaja"){
+        var optionArray = {{ lista_Jaja|safe }};
+    }
+    else if(s1.value == "Mięso"){
+        var optionArray = {{ lista_Mieso|safe }};
+    }
+    else if(s1.value == "Owoce"){
+        var optionArray = {{ lista_Owoce|safe }};
+    }
+    else if(s1.value == "Produkty cukiernicze"){
+        var optionArray = {{ lista_p_cukiernicze|safe }};
+    }
+    else if(s1.value == "Produkty mleczne"){
+        var optionArray = {{ lista_p_mleczne|safe }};
+    }
+    else if(s1.value == "Produkty zbożowe"){
+        var optionArray = {{ lista_p_zbozowe|safe }};
+    }
+    else if(s1.value == "Przyprawy"){
+        var optionArray = {{ lista_Przyprawy|safe }};
+    }
+    else if(s1.value == "Ryby"){
+        var optionArray = {{ lista_Ryby|safe }};
+    }
+    else if(s1.value == "Suche nasiona strączkowe"){
+        var optionArray = {{ lista_s_nasiona|safe }};
+    }
+    else if(s1.value == "Tłuszcze"){
+        var optionArray = {{ lista_Tluszcze|safe }};
+    }
+    else if(s1.value == "Warzywa"){
+        var optionArray = {{ lista_Warzywa|safe }};
+    }
+    else if(s1.value == "Wędliny"){
+        var optionArray = {{ lista_Wedliny|safe }};
+    }
+
+    for(var option in optionArray){
+        var pair = optionArray[option].split("|");
+        var newOption = document.createElement("option");
+        newOption.value = pair[0];
+        newOption.innerHTML = pair[1];
+        s2.options.add(newOption);
+    }
+}
+
+function updateElementIndex(el, prefix, ndx, len) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    var len = len;
+    var name = $(el).attr('name');
+    var id = el.id.replace(id_regex, replacement);
+    var regexp = /form-\d*-skladnik/;
+    if (el.name==="grupa"){
+        for(i=0;i<tab.length;i++){
+            if (tab[i][1]==="TF"){
+                tab[i][1] = "False";
+                licznik = tab[i][0];
+                var id = 'id_' + name+ licznik;
+                var id2 = 'id_pip' + licznik;
+                tab[len][1] = "True";
+                $(el).attr("onchange", "obsluga(this.id,'"+id2+"')");
+                break;
+            }
+        }
+    }
+    if (regexp.exec(el.name)!== null){
+            var id = 'id_pip' + licznik;
+    }
+    el.id = id;
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    var licznik = $('#id_' + prefix + '-TOTAL_FORMS').val();
+
+    for(i=0;i<tab.length;i++){
+        if (tab[i][1]==="True"){
+            tab[i][1] = "TF";
+            licznik = tab[i][0];
+            break;
+        }
+    }
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name')
+        if(name) {
+            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name+ licznik;
+            var id2 = 'id_pip' + licznik;
+            if (name == 'grupa') {
+                $(this).attr({'name': name, 'id': id,'onchange':"obsluga(this.id,'"+id2+"')"}).val('').removeAttr('checked');
+            }
+            else if(/form-\d*-skladnik/.test(name)) {
+                var newselect = document.createElement("select");
+                newselect.id = id2;
+                newselect.name = "form-"+licznik+"-skladnik";
+                $(this).after(newselect);
+                $(this).remove()
+            }
+            else if(/form-\d*-ilosc/.test(name)) {
+                name = "form-"+licznik+"-ilosc";
+                id = "id_"+name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+            else if(/form-\d*-waga/.test(name)) {
+                name = "form-"+licznik+"-waga";
+                id = "id_"+name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('-');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        var forms = $('.form-row');
+        btn.closest('.form-row').remove();
+        var forms = $('.form-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i,forms.length);
+            });
+        }
+    }
+    for(i=0;i<tab.length;i++){
+        if (tab[i][1]==="False"){
+            tab[i][1] = "TF";
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.form-row:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+</script>
+{% endblock %}
