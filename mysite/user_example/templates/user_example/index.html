@@ -1,0 +1,92 @@
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dodaj_przepis' %}">Stwórz przepis</a>
+    </li>
+{% endblock  %}
+
+{% block glowny %}
+    <div class="container-fluid" id="main">
+        <header class="text-center">
+            <h1>Witamy w aplikacji Kulinarni!</h1>
+            <div class="tag">
+                <p>Naszym celem jest propagowanie zdrowego, domowego żywienia, o którym zapomina się w dzisiejszych
+                    czasach.</p>
+            </div>
+        </header>
+        <div class="container-fluid first">
+            <article>
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Co daje nam gotowanie w domu?</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor, sapien id
+                            ullamcorper
+                            sodales, magna est lobortis purus, ac pharetra ex lorem eget lorem. Etiam mattis condimentum
+                            lacus
+                            vel porta. Vivamus tempus eu elit vel scelerisque. Integer semper turpis varius tristique
+                            eleifend.
+                            In at feugiat augue. Maecenas mi mi, suscipit eget leo eget, euismod suscipit lacus. Curabitur
+                            ut
+                            fringilla nibh, ac facilisis velit. In non orci vel est ultricies molestie. Donec massa risus,
+                            pretium tincidunt bibendum sed, vestibulum at libero. Ut convallis pellentesque est ac iaculis.
+                            Ut
+                            erat eros, imperdiet tincidunt pellentesque vitae, tempor ut purus. Aliquam erat volutpat. Fusce
+                            non
+                            augue pharetra, maximus nulla non, gravida elit. Proin ultrices fringilla vehicula.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="container-fluid second">
+            <section>
+                <div class="row">
+                    <div class="col-12 instruction">
+                        <h2>Jak to działa?</h2>
+                        <p>To bardzo proste!</p>
+                        <p>Do stworzenia przepisu wystarczy tylko trochę cierpliwości, kreatywności i nutki pozytywnego
+                            myślenia
+                            :)</p>
+                        <p>Za pomocą listy składników możesz dobrać interesujące cię elementy do zrobienia twojego
+                            wymarzonego
+                            dania.
+                            Dodajemy je za pomocą ikonki oznaczonej symbolem "+", a w razie pomyłki usuwamy "-" - tym
+                            procesem
+                            określamy ilość,
+                            miary określamy za pomocą listy obok. Następnie należy podać instrukcje niezbędne do wykonania
+                            dania
+                            a na końcu
+                            trzeba zastanowić się nad nazwą. Po tych krokach klikamy duży przycisk "gotowe" i w ten sposób
+                            zamieszczamy nasz przepis.
+                        </p>
+                        <h3>Powodzenia i smacznego!</h3>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+{% endblock %}
