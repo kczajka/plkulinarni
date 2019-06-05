@@ -1,0 +1,14 @@
+{% extends 'registration/base.html' %}
+
+{% block login %}
+<div class="container text-center panel">
+    <div class="col-12">
+        <h1>Błąd aktywacji</h1>
+    </div>
+    <form method="post" action="{% url 'login/' %}">
+        <div class="form-group">
+            <label>Konto zostało już aktywowane, lub wygasł link aktywacyjny</label>
+        </div>
+    </form>
+</div>
+{% endblock %}
