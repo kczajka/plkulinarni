@@ -1,0 +1,896 @@
+html {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  html body {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    perspective: 1px;
+    transform-style: preserve-3d;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+    html body nav {
+      background-color: #edcd2f !important;
+      font-weight: 700; }
+      html body nav .wrapper {
+        background: transparent;
+        position: relative;
+        height: auto; }
+        html body nav .wrapper .box {
+          position: absolute;
+          height: 0;
+          padding: 0;
+          overflow: hidden;
+          background: #edcd2f;
+          right: -50%; }
+          html body nav .wrapper .box p:first-of-type {
+            margin-top: 10%; }
+        html body nav .wrapper:hover .box {
+          height: 200px;
+          width: 200px;
+          padding: 0 1em; }
+      html body nav .fa-address-card {
+        font-size: 40px; }
+      html body nav .navbar-brand {
+        font-size: 30px;
+        text-shadow: 0 0 2px #000;
+        color: #820a0a !important; }
+      html body nav ul {
+        margin: 0 auto; }
+        html body nav ul li {
+          margin-left: 30px;
+          margin-right: 30px;
+          border: #000 1px solid;
+          width: 190px;
+          text-align: center;
+          padding: 0; }
+          html body nav ul li:last-of-type {
+            margin-right: 0; }
+          html body nav ul li:first-of-type {
+            margin-left: 0; }
+          html body nav ul li a {
+            transition: background-color 0.5s ease; }
+            html body nav ul li a:hover {
+              background-color: #000;
+              color: #edcd2f !important; }
+      html body nav a {
+        text-decoration: none !important;
+        color: #000000; }
+        html body nav a:hover {
+          color: #820a0a; }
+    html body #main header {
+      box-sizing: border-box;
+      min-height: 100vh;
+      padding: 20vw 0 5vw;
+      transform-style: inherit;
+      width: 100vw;
+      color: #000; }
+      html body #main header h1 {
+        text-shadow: 0 0 2px #000;
+        font-size: 400%; }
+      html body #main header .tag {
+        display: inline;
+        margin: 0px 10px 0px 0px;
+        height: auto;
+        width: auto;
+        background-color: #f4f4f4; }
+        html body #main header .tag p {
+          border-radius: 10px;
+          background-color: #edcd2f;
+          font-size: 28px;
+          font-weight: 900;
+          text-shadow: 0 0 2px #000;
+          display: inline;
+          margin: 0px 0px 0px 0px;
+          padding: 0px 0px 0px 0px; }
+        html body #main header .tag:before {
+          background: 50% 50% / cover; }
+        html body #main header .tag::before {
+          bottom: 0;
+          content: "";
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+          display: block;
+          background-image: url("https://www.buffalowildwings.com/globalassets/menuitems/10120006-ultimate-nachos.png");
+          background-size: cover;
+          transform-origin: center center 0;
+          transform: translateZ(-1px) scale(2);
+          z-index: -1;
+          min-height: 100vh; }
+        html body #main header .tag h1 {
+          margin-top: -100px; }
+    html body #main .first {
+      margin-top: 20vh;
+      margin-bottom: 20vh; }
+    html body footer {
+      font-weight: 600;
+      font-size: 20px;
+      margin-top: 5vh;
+      background-color: #edcd2f;
+      width: 100%;
+      min-height: 20vh;
+      position: relative;
+      bottom: 0; }
+      html body footer .contact {
+        position: relative; }
+        html body footer .contact h3 {
+          margin-top: 20px;
+          text-shadow: 0 0 2px #000;
+          color: #820a0a; }
+        html body footer .contact p {
+          display: inline-block;
+          margin: 30px 50px 0 50px; }
+        html body footer .contact i {
+          position: relative;
+          right: 35px;
+          top: 2px;
+          font-size: 30px; }
+      html body footer .contact-bottom {
+        margin-top: 25px; }
+        html body footer .contact-bottom p {
+          margin-right: 125px; }
+        html body footer .contact-bottom i {
+          cursor: pointer;
+          font-size: 30px;
+          margin-left: 20px;
+          position: relative;
+          left: 200px;
+          bottom: 45px; }
+          html body footer .contact-bottom i:hover {
+            color: #820a0a; }
+    html body #base {
+      margin: 10vh auto auto auto; }
+      html body #base > img {
+        z-index: -1;
+        position: absolute;
+        bottom: 20%;
+        right: 5%;
+        width: 400px;
+        height: 400px; }
+      html body #base h1 {
+        text-shadow: 0 0 2px #000;
+        position: relative; }
+        html body #base h1:after {
+          background-image: url("https://workout-polska.pl/images/workout/kolo.jpg");
+          background-size: 200px 200px;
+          display: inline-block;
+          position: absolute;
+          width: 200px;
+          height: 200px;
+          content: "";
+          left: 70%;
+          top: -140%; }
+      html body #base .item {
+        width: 80%;
+        border: #edcd2f 3px solid;
+        margin-top: 10vh;
+        margin-left: 10%;
+        text-align: left; }
+        html body #base .item .itemImg {
+          margin: 0;
+          padding-left: 5%;
+          overflow: hidden; }
+          html body #base .item .itemImg > img {
+            width: 100%;
+            object-fit: cover; }
+        html body #base .item .itemContent {
+          margin: 0;
+          padding: 0; }
+    html body #log h1 {
+      margin-bottom: 8%;
+      margin-top: 5%; }
+    html body #log .error {
+      display: inline-block;
+      width: 15%;
+      height: 50vh;
+      position: absolute;
+      text-align: center;
+      color: red; }
+      html body #log .error p {
+        word-break: break-all; }
+    html body #log form {
+      -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      font-size: 32px;
+      background-color: #edcd2f;
+      height: 50vh;
+      width: 50%;
+      margin: 0 auto;
+      display: inline-block; }
+      html body #log form label {
+        margin-top: 5%; }
+      html body #log form input {
+        width: 15vw;
+        margin: 0 auto;
+        height: 50px;
+        font-size: 28px;
+        border-color: #820a0a; }
+        html body #log form input[type="submit"] {
+          background-color: #000000;
+          font-size: 32px;
+          font-weight: 600;
+          height: 80px;
+          color: #ffffff;
+          border: 2px solid #820a0a; }
+          html body #log form input[type="submit"]:hover {
+            background-color: #edcd2f;
+            color: #000000; }
+          html body #log form input[type="submit"]:first-child {
+            width: 140px;
+            font-size: 28px;
+            height: 60px; }
+      html body #log form a {
+        color: #fff;
+        background-color: #000000;
+        font-size: 22px;
+        font-weight: 700;
+        border-color: #820a0a;
+        border-width: 3px;
+        letter-spacing: 2px; }
+        html body #log form a:nth-of-type(3) {
+          width: 60%;
+          height: 70px;
+          font-size: 30px;
+          margin-top: 2%; }
+        html body #log form a:hover {
+          background-color: #edcd2f;
+          color: #000; }
+      html body #log form h2 {
+        margin-top: 10%; }
+    html body #register h1 {
+      margin-bottom: 8%;
+      margin-top: 5%; }
+    html body #register .error {
+      display: inline-block;
+      width: 15%;
+      height: 50vh;
+      position: absolute;
+      text-align: center;
+      color: red; }
+      html body #register .error p {
+        word-break: break-all; }
+    html body #register form {
+      -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      font-size: 32px;
+      background-color: #edcd2f;
+      height: 50vh;
+      width: 50%;
+      margin: 0 auto;
+      display: inline-block; }
+      html body #register form label {
+        margin-top: 5%; }
+      html body #register form input {
+        width: 15vw;
+        margin: 0 auto;
+        height: 50px;
+        font-size: 28px;
+        border-color: #820a0a; }
+        html body #register form input[type="submit"] {
+          background-color: #000000;
+          font-size: 32px;
+          font-weight: 600;
+          height: 80px;
+          color: #ffffff;
+          border: 2px solid #820a0a; }
+          html body #register form input[type="submit"]:hover {
+            background-color: #edcd2f;
+            color: #000000; }
+          html body #register form input[type="submit"]:first-child {
+            width: 140px;
+            font-size: 28px;
+            height: 60px; }
+      html body #register form a {
+        color: #fff;
+        background-color: #000000;
+        font-size: 22px;
+        font-weight: 700;
+        border-color: #820a0a;
+        border-width: 3px;
+        letter-spacing: 2px; }
+        html body #register form a:nth-of-type(3) {
+          width: 60%;
+          height: 70px;
+          font-size: 30px;
+          margin-top: 2%; }
+        html body #register form a:hover {
+          background-color: #edcd2f;
+          color: #000; }
+      html body #register form h2 {
+        margin-top: 10%; }
+    html body #creator img {
+      position: absolute;
+      z-index: -1;
+      left: 70%; }
+      html body #creator img:last-child {
+        bottom: 2%;
+        left: 5%; }
+    html body #creator form {
+      margin-top: 5vh; }
+      html body #creator form .recipeName {
+        margin-top: 2%; }
+        html body #creator form .recipeName input {
+          font-size: 30px;
+          border: 2px solid #edcd2f;
+          border-radius: 7px;
+          width: 20vw;
+          text-align: center; }
+        html body #creator form .recipeName select {
+          width: 13%; }
+    html body #creator .ing {
+      margin: 0 auto;
+      border: 2px solid #edcd2f;
+      height: 300px;
+      padding: 0; }
+      html body #creator .ing .selects {
+        text-align: left;
+        padding-left: 10px; }
+        html body #creator .ing .selects label {
+          position: relative;
+          width: 50%;
+          margin-top: 10px; }
+        html body #creator .ing .selects select {
+          position: absolute;
+          width: 40%;
+          height: 45px;
+          left: 40%;
+          margin-top: 10px; }
+          html body #creator .ing .selects select:last-of-type {
+            width: 15%; }
+        html body #creator .ing .selects input {
+          width: 60px;
+          left: 40%;
+          top: 38.5%;
+          position: absolute; }
+      html body #creator .ing > button {
+        margin-top: 2%; }
+    html body #creator #przeszli {
+      margin-top: 0;
+      font-size: 20px;
+      font-weight: 500;
+      height: 50px;
+      width: 100px; }
+    html body #creator h4 {
+      margin-top: 2%; }
+    html body #creator button {
+      margin-top: 3%;
+      background-color: #edcd2f;
+      color: #000000;
+      font-size: 34px;
+      border: 2px solid #000000;
+      width: 130px;
+      height: 70px;
+      font-weight: 700; }
+      html body #creator button:nth-child(3) {
+        font-size: 16px; }
+    html body #creator .file {
+      width: auto;
+      height: auto;
+      margin: 0 auto; }
+      html body #creator .file input {
+        margin-top: 1vh;
+        width: auto; }
+    html body #creator .text {
+      margin-top: 1%; }
+      html body #creator .text textarea {
+        border: 2px solid #edcd2f;
+        border-radius: 5px;
+        margin: 0 auto; }
+      html body #creator .text .fast {
+        width: 50%;
+        margin: 0 auto;
+        height: 5%; }
+    html body #creator .recipeImg {
+      border: 2px solid #edcd2f;
+      width: 200px; }
+    html body .panel h1 {
+      margin-bottom: 8%;
+      margin-top: 5%; }
+    html body .panel .error {
+      display: inline-block;
+      width: 15%;
+      height: 50vh;
+      position: absolute;
+      text-align: center;
+      color: red; }
+      html body .panel .error p {
+        word-break: break-all; }
+    html body .panel form {
+      -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.75);
+      font-size: 32px;
+      background-color: #edcd2f;
+      height: 50vh;
+      width: 50%;
+      margin: 0 auto;
+      display: inline-block; }
+      html body .panel form label {
+        margin-top: 5%; }
+      html body .panel form input {
+        width: 15vw;
+        margin: 0 auto;
+        height: 50px;
+        font-size: 28px;
+        border-color: #820a0a; }
+        html body .panel form input[type="submit"] {
+          background-color: #000000;
+          font-size: 32px;
+          font-weight: 600;
+          height: 80px;
+          color: #ffffff;
+          border: 2px solid #820a0a; }
+          html body .panel form input[type="submit"]:hover {
+            background-color: #edcd2f;
+            color: #000000; }
+          html body .panel form input[type="submit"]:first-child {
+            width: 140px;
+            font-size: 28px;
+            height: 60px; }
+      html body .panel form a {
+        color: #fff;
+        background-color: #000000;
+        font-size: 22px;
+        font-weight: 700;
+        border-color: #820a0a;
+        border-width: 3px;
+        letter-spacing: 2px; }
+        html body .panel form a:nth-of-type(3) {
+          width: 60%;
+          height: 70px;
+          font-size: 30px;
+          margin-top: 2%; }
+        html body .panel form a:hover {
+          background-color: #edcd2f;
+          color: #000; }
+      html body .panel form h2 {
+        margin-top: 10%; }
+    html body .panel form {
+      margin-bottom: 5vh;
+      height: auto; }
+      html body .panel form input:last-of-type {
+        margin-bottom: 3vh; }
+    html body #client h1 {
+      margin-bottom: 2%; }
+    html body #client > section {
+      margin: 5% 2% 5% 2%; }
+      html body #client > section .myRecipes {
+        border: 2px solid #edcd2f;
+        height: auto; }
+        html body #client > section .myRecipes h2 {
+          margin-top: 2%; }
+        html body #client > section .myRecipes .frame {
+          padding: 0;
+          border: 5px solid #820a0a;
+          height: 40vh;
+          margin: 1% 3% 2% 3%;
+          display: inline-block;
+          overflow: hidden; }
+          html body #client > section .myRecipes .frame .frameImg {
+            width: 100%;
+            overflow: hidden; }
+            html body #client > section .myRecipes .frame .frameImg:hover .overlay {
+              bottom: 0;
+              height: 100%; }
+            html body #client > section .myRecipes .frame .frameImg .overlay {
+              position: absolute;
+              bottom: 100%;
+              left: 0;
+              right: 0;
+              background-color: #000000;
+              overflow: hidden;
+              width: 100%;
+              height: 0;
+              transition: .5s ease;
+              opacity: 0.7; }
+              html body #client > section .myRecipes .frame .frameImg .overlay .overlayText {
+                width: 100%;
+                color: white;
+                font-size: 16px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center; }
+                html body #client > section .myRecipes .frame .frameImg .overlay .overlayText > button {
+                  letter-spacing: 2px;
+                  opacity: 2;
+                  width: auto;
+                  height: auto;
+                  font-size: 26px;
+                  background-color: black;
+                  padding: 10px;
+                  color: #fff !important;
+                  text-transform: uppercase;
+                  border-radius: 20px;
+                  border: 1px solid #ffffff;
+                  margin-bottom: 5%; }
+                  html body #client > section .myRecipes .frame .frameImg .overlay .overlayText > button:hover {
+                    text-shadow: 0px 0px 6px white;
+                    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+                    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+                    transition: all 0.4s ease 0s; }
+            html body #client > section .myRecipes .frame .frameImg img {
+              object-fit: cover;
+              width: 100%;
+              height: 40vh;
+              display: block; }
+        html body #client > section .myRecipes .frame2 button {
+          left: 21% !important; }
+      html body #client > section .rightPanel {
+        height: auto;
+        border: 2px solid #edcd2f;
+        border-left: none;
+        padding: 0; }
+        html body #client > section .rightPanel h2 {
+          margin-top: 2%;
+          margin-bottom: 4%; }
+        html body #client > section .rightPanel .frame {
+          padding: 0;
+          border: 5px solid #820a0a;
+          height: 40vh;
+          margin: 1% 3% 2% 3%;
+          display: inline-block;
+          overflow: hidden; }
+          html body #client > section .rightPanel .frame .frameImg {
+            width: 100%;
+            overflow: hidden; }
+            html body #client > section .rightPanel .frame .frameImg:hover .overlay {
+              bottom: 0;
+              height: 100%; }
+            html body #client > section .rightPanel .frame .frameImg .overlay {
+              position: absolute;
+              bottom: 100%;
+              left: 0;
+              right: 0;
+              background-color: #000000;
+              overflow: hidden;
+              width: 100%;
+              height: 0;
+              transition: .5s ease;
+              opacity: 0.7; }
+              html body #client > section .rightPanel .frame .frameImg .overlay .overlayText {
+                width: 100%;
+                color: white;
+                font-size: 16px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center; }
+                html body #client > section .rightPanel .frame .frameImg .overlay .overlayText > button {
+                  letter-spacing: 2px;
+                  opacity: 2;
+                  width: auto;
+                  height: auto;
+                  font-size: 26px;
+                  background-color: black;
+                  padding: 10px;
+                  color: #fff !important;
+                  text-transform: uppercase;
+                  border-radius: 20px;
+                  border: 1px solid #ffffff;
+                  margin-bottom: 5%; }
+                  html body #client > section .rightPanel .frame .frameImg .overlay .overlayText > button:hover {
+                    text-shadow: 0px 0px 6px white;
+                    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+                    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+                    transition: all 0.4s ease 0s; }
+            html body #client > section .rightPanel .frame .frameImg img {
+              object-fit: cover;
+              width: 100%;
+              height: 40vh;
+              display: block; }
+        html body #client > section .rightPanel .frame2 button {
+          left: 21% !important; }
+        html body #client > section .rightPanel button {
+          font-size: 25px !important; }
+    html body #viewRecipe {
+      text-decoration: none; }
+      html body #viewRecipe aside {
+        width: 15%;
+        float: left;
+        position: fixed;
+        padding: 0;
+        margin: 0; }
+        html body #viewRecipe aside form button {
+          margin-top: 2%;
+          width: 35%;
+          float: left;
+          padding: 0;
+          font-size: 30px;
+          background-color: #edcd2f;
+          border: 2px solid #820a0a;
+          font-weight: 700; }
+          html body #viewRecipe aside form button:nth-of-type(2) {
+            margin-left: 5px; }
+          html body #viewRecipe aside form button:last-of-type {
+            width: 72%; }
+        html body #viewRecipe aside form select {
+          width: 200px;
+          margin-top: 5%; }
+      html body #viewRecipe .header {
+        margin-top: 5%; }
+      html body #viewRecipe section {
+        width: 60%;
+        margin: 0 auto; }
+        html body #viewRecipe section .recipea {
+          margin-top: 5%;
+          margin-bottom: 5%;
+          width: 100%; }
+          html body #viewRecipe section .recipea .recImg {
+            height: auto;
+            border: 2px solid #edcd2f;
+            width: 100%;
+            display: inline-block;
+            padding: 0;
+            border-right: none;
+            overflow: hidden; }
+            html body #viewRecipe section .recipea .recImg a img {
+              object-fit: cover;
+              max-width: 100%;
+              min-height: 100%;
+              transition: 1s;
+              cursor: pointer; }
+              html body #viewRecipe section .recipea .recImg a img:hover {
+                transform: scale(1.2); }
+          html body #viewRecipe section .recipea .recContent {
+            padding: 10px;
+            display: inline-block;
+            height: 300px;
+            border: 2px solid #edcd2f; }
+            html body #viewRecipe section .recipea .recContent a {
+              text-decoration: none; }
+              html body #viewRecipe section .recipea .recContent a h3 {
+                text-align: center;
+                color: #820a0a; }
+                html body #viewRecipe section .recipea .recContent a h3:hover {
+                  color: #edcd2f; }
+            html body #viewRecipe section .recipea .recContent p {
+              font-size: 18px; }
+            html body #viewRecipe section .recipea .recContent a {
+              text-decoration: none; }
+              html body #viewRecipe section .recipea .recContent a em {
+                color: #820a0a;
+                text-align: right; }
+    html body #admin {
+      background-color: #e8eaed; }
+      html body #admin .adminPanel {
+        height: 400px;
+        margin-top: 5%; }
+        html body #admin .adminPanel h3 {
+          text-align: center; }
+        html body #admin .adminPanel:nth-child(2) {
+          border-top: 2px solid #000000; }
+        html body #admin .adminPanel .request {
+          border: 1px solid #333333;
+          height: 20%;
+          padding: 0;
+          margin: 0 auto; }
+          html body #admin .adminPanel .request .adminImg {
+            height: 100%;
+            width: 15%;
+            float: left;
+            padding: 0;
+            border-right: 1px solid #000000; }
+            html body #admin .adminPanel .request .adminImg img {
+              object-fit: cover;
+              width: 100%;
+              height: 100%; }
+          html body #admin .adminPanel .request .adminText {
+            float: left;
+            border-right: 1px solid #000000;
+            width: 22%;
+            height: 100%;
+            text-align: center;
+            padding-top: 20px; }
+          html body #admin .adminPanel .request .userName {
+            float: left;
+            border-right: 1px solid #000000;
+            width: 22%;
+            height: 100%;
+            text-align: center;
+            padding-top: 20px; }
+          html body #admin .adminPanel .request .adminContent {
+            float: left;
+            border-right: 1px solid #000000;
+            width: 28%;
+            height: 100%;
+            text-align: left;
+            font-size: 12px; }
+          html body #admin .adminPanel .request .adminDecision {
+            width: auto; }
+            html body #admin .adminPanel .request .adminDecision button {
+              border: none;
+              padding: 0;
+              margin: 5px 0 0 0;
+              width: 13%;
+              height: 50%; }
+              html body #admin .adminPanel .request .adminDecision button:first-of-type, html body #admin .adminPanel .request .adminDecision button:nth-of-type(2) {
+                width: 6.2%; }
+              html body #admin .adminPanel .request .adminDecision button:first-of-type {
+                background-color: #81c190; }
+              html body #admin .adminPanel .request .adminDecision button:nth-of-type(2) {
+                background-color: #d83724; }
+              html body #admin .adminPanel .request .adminDecision button:last-of-type {
+                background-color: #94c2ef; }
+    html body #showRecipe {
+      border-left: 5px solid #edcd2f;
+      border-right: 5px solid #edcd2f; }
+      html body #showRecipe h1 {
+        margin-top: 5%; }
+      html body #showRecipe > section {
+        margin-top: 5%; }
+        html body #showRecipe > section:last-child {
+          padding: 5px;
+          background-color: #cccccc; }
+          html body #showRecipe > section:last-child .comment {
+            margin-top: 2%; }
+            html body #showRecipe > section:last-child .comment:first-of-type {
+              border: none; }
+            html body #showRecipe > section:last-child .comment em {
+              text-align: center;
+              font-weight: 500; }
+              html body #showRecipe > section:last-child .comment em:hover {
+                color: #820a0a;
+                cursor: pointer; }
+            html body #showRecipe > section:last-child .comment .commentText {
+              position: relative; }
+              html body #showRecipe > section:last-child .comment .commentText p {
+                font-size: 17px; }
+              html body #showRecipe > section:last-child .comment .commentText i {
+                right: 20%;
+                bottom: 5%;
+                position: absolute; }
+                html body #showRecipe > section:last-child .comment .commentText i:hover {
+                  cursor: pointer;
+                  color: #820a0a; }
+                html body #showRecipe > section:last-child .comment .commentText i:nth-child(2) {
+                  right: 40%; }
+                html body #showRecipe > section:last-child .comment .commentText i:nth-child(3) {
+                  right: 30%; }
+          html body #showRecipe > section:last-child .addComment {
+            position: relative;
+            margin: 0 auto; }
+            html body #showRecipe > section:last-child .addComment button {
+              position: absolute;
+              right: 20%;
+              top: 0; }
+              html body #showRecipe > section:last-child .addComment button:last-child {
+                right: 1.5%; }
+            html body #showRecipe > section:last-child .addComment textarea {
+              margin: 0 auto;
+              text-align: left; }
+          html body #showRecipe > section:last-child .reply .addComment {
+            position: relative;
+            margin: 0 auto; }
+          html body #showRecipe > section:last-child .reply .addComment button {
+              position: absolute;
+              right: 15%;
+              top: 0; }
+          html body #showRecipe > section:last-child .reply .addComment button:last-child {
+                right: 1.5%; }
+          html body #showRecipe > section:last-child .reply {
+            margin-top: 2%; }
+            html body #showRecipe > section:last-child .reply:first-of-type {
+              border: none; }
+            html body #showRecipe > section:last-child .reply em {
+              text-align: center;
+              font-weight: 500; }
+              html body #showRecipe > section:last-child .reply em:hover {
+                color: #820a0a;
+                cursor: pointer; }
+            html body #showRecipe > section:last-child .reply .commentText {
+              position: relative; }
+              html body #showRecipe > section:last-child .reply .commentText p {
+                font-size: 17px; }
+              html body #showRecipe > section:last-child .reply .commentText i {
+                right: 20%;
+                bottom: 5%;
+                position: absolute; }
+                html body #showRecipe > section:last-child .reply .commentText i:hover {
+                  cursor: pointer;
+                  color: #820a0a; }
+                html body #showRecipe > section:last-child .reply .commentText i:nth-child(2) {
+                  right: 40%; }
+                html body #showRecipe > section:last-child .reply .commentText i:nth-child(3) {
+                  right: 30%; }
+        html body #showRecipe > section ul {
+          color: #820a0a;
+          font-weight: 500;
+          font-size: 24px; }
+        html body #showRecipe > section .showImg {
+          height: 100%;
+          width: 100%;
+          display: inline-block;
+          padding: 0;
+          overflow: hidden; }
+          html body #showRecipe > section .showImg img {
+            object-fit: cover;
+            max-width: 70%;
+            min-height: 70%;
+            cursor: pointer;
+            border: 3px solid #edcd2f;
+            border-radius: 5px; }
+      html body #showRecipe article {
+        margin-top: 10%; }
+        html body #showRecipe article .author {
+          margin-top: 2%;
+          text-align: right; }
+      html body #showRecipe > button {
+        background-color: #edcd2f;
+        border: 3px solid #000000;
+        font-size: 34px;
+        font-weight: 700; }
+    @media (max-width: 991px) {
+      html body nav .navbar-collapse {
+        text-align: center; }
+        html body nav .navbar-collapse ul {
+          margin: 0 auto;
+          display: inline-block;
+          float: none;
+          text-align: center; }
+          html body nav .navbar-collapse ul li {
+            border: none;
+            margin-left: 40px !important;
+            margin-right: 40px !important; }
+      html body footer {
+        position: relative; }
+      html body #admin .request {
+        height: 25% !important; }
+        html body #admin .request .adminText {
+          font-size: 20px !important;
+          padding-top: 30px !important; }
+        html body #admin .request .userName {
+          font-size: 18px !important;
+          padding-top: 32px !important; }
+        html body #admin .request .adminDecision button {
+          font-size: 20px;
+          width: 13% !important;
+          margin: 0 !important; }
+      html body #base h1 {
+        text-shadow: 0 0 2px #000;
+        position: relative; }
+        html body #base h1:after {
+          background-image: url("https://workout-polska.pl/images/workout/kolo.jpg");
+          background-size: 150px 150px;
+          display: none;
+          position: absolute;
+          width: 150px;
+          height: 150px;
+          content: "";
+          left: 80%;
+          top: -120%; }
+      html body #base .item .itemImg {
+        margin: 0 auto;
+        overflow: hidden; }
+        html body #base .item .itemImg img {
+          width: 100%;
+          object-fit: cover; }
+      html body #base .item .itemContent {
+        padding: 5px; }
+        html body #base .item .itemContent h3 {
+          text-align: center; }
+      html body .panel h1 {
+        margin-bottom: 0; }
+      html body .panel form {
+        margin-top: 25%;
+        width: 75%;
+        margin-bottom: 0; }
+        html body .panel form .form-group {
+          font-size: 26px;
+          width: 100%; }
+          html body .panel form .form-group label {
+            width: 100%; } }
+
+/*# sourceMappingURL=style.css.map */
