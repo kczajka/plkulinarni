@@ -1,0 +1,136 @@
+{% extends 'user_example/index_glowny.html' %}
+
+{% block zaloguj %}
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dodaj_przepis' %}">Stwórz przepis</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container-fluid" id="client">
+    <section>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Panel użytkownika: <em>{{ user.username }}</em></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-8 myRecipes text-center">
+                <h2>Twoje przepisy</h2>
+                {% for data in dane %}
+                    <div class="col-3 frame">
+                        <div class="frameImg">
+                            <img src="http://127.0.0.1:8000/{{ data.obraz }}"/>
+                            <div class="overlay">
+                                <div class="overlayText">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button name="przycisk" value={{ data.id }}>Obejrzyj</button>
+                                        <h4>{{ data.nazwa }}</h4>
+                                        <p>{{ data.opis }}</p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-4 rightPanel text-center">
+                <h2>Ulubione</h2>
+                <div class="col-5 frame">
+                    <div class="frameImg">
+                        <img src="https://eu2dodostatic.blob.core.windows.net/usa/Img/Products/Pizza/en-US/41ac8c55-b5ae-40db-b9e9-c5abb670b57e.jpg"/>
+                        <div class="overlay">
+                            <div class="overlayText">
+                                <button>Obejrzyj</button>
+                                <h4>Pizza</h4>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                    printer took a galley of type and scrambled it to make a type specimen book. It has
+                                    survived not only five centuries, but also the leap into electronic typesetting,
+                                    remaining essentially unchanged.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 frame">
+                    <div class="frameImg">
+                        <img src="https://eu2dodostatic.blob.core.windows.net/usa/Img/Products/Pizza/en-US/41ac8c55-b5ae-40db-b9e9-c5abb670b57e.jpg"/>
+                        <div class="overlay">
+                            <div class="overlayText">
+                                <button>Obejrzyj</button>
+                                <h4>Pizza</h4>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                    printer took a galley of type and scrambled it to make a type specimen book. It has
+                                    survived not only five centuries, but also the leap into electronic typesetting,
+                                    remaining essentially unchanged.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 myRecipes text-center">
+                <h2>Aktywne Edit</h2>
+                {% for data in edity %}
+                    <div class="col-3 frame">
+                        <div class="frameImg">
+                            <img src="http://127.0.0.1:8000/{{ data.obraz }}"/>
+                            <div class="overlay">
+                                <div class="overlayText">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button name="przycisk_aktywne" value={{ data.id }}>Obejrzyj</button>
+                                        <h4>{{ data.nazwa }}</h4>
+                                        <p>{{ data.opis }}</p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for data in testowe %}
+                    <div class="col-3 frame">
+                        <div class="frameImg">
+                            <img src="http://127.0.0.1:8000/{{ data.obraz }}"/>
+                            <div class="overlay">
+                                <div class="overlayText">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button name="przycisk_testowe" value={{ data.id }}>Obejrzyj</button>
+                                        <h4>{{ data.nazwa }}</h4>
+                                        <p>{{ data.opis }}</p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
