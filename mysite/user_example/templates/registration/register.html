@@ -1,0 +1,43 @@
+{% extends 'registration/base.html' %}
+{% block error %}
+    {% endblock %}
+{% block login %}
+<div class="container text-center" id="register">
+    <div class="col-12">
+        <h1>Rejestracja</h1>
+    </div>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        {% if field.label == 'Nazwa' %}
+            <label class="label">{{ field.label }}</label>
+            {{ field }}
+        {% elif field.label == 'Hasło' %}
+            <div class="form-group">
+                <label class="label">{{ field.label }}</label>
+                {{ field }}
+        {% elif field.label == 'Haslo2' %}
+                {{ field }}
+            </div>
+        {% else %}
+            <div class="form-group">
+            <label class="label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" value="Zarejestruj się!">
+
+    </form>
+    <div class="error">
+        {% for field in form %}
+            <p>
+                {{ field.errors|striptags }}
+            </p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
