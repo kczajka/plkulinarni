@@ -1,0 +1,19 @@
+<h1>Dodaj pizzę</h1>
+
+<form action="." method="post" id="pform">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <h3>Składniki:</h3>
+  {{ skladniki.management_form }}
+  {{ skladniki.non_form_errors }}
+  {% for skl in skladniki %}
+  {{ skl.id }}
+    <div class="{{ skladniki.prefix }}">
+      <span>{{ forloop.counter }})&nbsp;</span>
+      {{ skl.skladnik.errors }}
+        {{ skl.skladnik.label_tag }} {{ skl.skladnik }}
+    </div>
+  {% endfor %}
+  <br /><input type="submit" value="Zapisz">
+</form>
