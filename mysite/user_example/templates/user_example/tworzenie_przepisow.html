@@ -1,0 +1,434 @@
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container-fluid text-center" id="creator">
+    <form class="tworzenie_przepisow" method="POST" action="" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <h1>Stwórz przepis</h1>
+                    <p>W tej zakładce możesz stworzyć przepis podzielić się nim z innymi!</p>
+                </div>
+            </div>
+            <div class="recipe">
+                        <img alt="obrazek" src="https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"/>
+                <div class="row">
+                    <div class="col-12 recipeName">
+                        <label>
+                            {{przepis_form.nazwa}}
+                        </label>
+                    </div>
+                </div>
+                {{ formset.management_form }}
+                    {% for form in formset %}
+                        <div class="row" id="parent_ing">
+                            <div class="col-4 ing">
+                                <div class="row form-row spacer">
+                                    <div class="selects">
+                                        <label for="id_form-skladnik">Kategoria:</label>
+                                        <select id="grupa_glowna" name="grupa" required id="id_grupa0" onchange="obsluga(this.id,'id_pip0')">
+                                            {% for field in form2.grupa %}
+                                                <option value="{{ field|striptags }}">
+                                                    {{ field|striptags }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="id_form-skladnik2">Składnik:</label>
+                                        <select name="form-0-skladnik" required id="id_pip0"></select>
+                                        <label for="id_form-ilosc">Ilość:</label>
+                                        {% for field in form.ilosc %}
+                                            {{ field }}
+                                        {% endfor %}
+                                        <label for="id_form-waga">Jednostka:</label>
+                                        <select name="form-0-waga" id="id_waga">
+                                           {% for field in form.waga %}
+                                                {{ field }}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success add-form-row">+</button>
+                            </div>
+                        </div>
+                         <div class="row" id="dodawanie_skladnika">
+                            <div class="col-12 fast">
+                                <h4>Szybkie dodawanie składnika</h4>
+                                <input type="text" name="nazwa_skl" id="nazwa_skl" placeholder="Nazwa składnika"/>
+                                <select name="form-add-skladnik" id="grupa_skl">
+                                    {% for field in form2.grupa %}
+                                        <option value="{{ field|striptags }}">
+                                            {{ field|striptags }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <button  id="przeszli" class="acc-skl">Prześlij</button>
+                            </div>
+                        </div>
+                        <button id="add">Dodaj</button>
+                    {% endfor %}
+            </div>
+            <div class="file">
+                <h3>Dodaj zdjęcie dania</h3>
+                <input type="file" name="obraz" accept="image/*" id="id_obraz" onchange="wys_img(this.id)">
+            </div>
+        </section>
+        {% for field in przepis_form %}
+            {{ field.errors|striptags }}
+        {% endfor %}
+        {% for field in przepis_form_test %}
+            {{ field.errors|striptags }}
+        {% endfor %}
+        {% for field in formset %}
+            {{ field.errors|striptags }}
+        {% endfor %}
+        <article>
+            <label>
+                <h2>A teraz napisz instrukcję jak zrobić to pyszne danie!</h2>
+                {{przepis_form.opis}}
+            </label>
+        </article>
+        <img src="https://www.wcrf-uk.org/sites/default/files/Onion%20A-Z%20Veg20.jpg"/>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" >
+function fastskl(){
+    var sel = document.getElementById('grupa_glowna');
+    var sel_cln = sel.cloneNode(true);
+    sel_cln.name = "form-0-waga";
+    sel_cln.id = "grupa_skl";
+    sel_cln.removeAttribute("onchange");
+    var element = document.createElement("div");
+    var element2 = document.createElement("div");
+    var ele_h4 = document.createElement("h4");
+    var ele_h4_text = document.createTextNode("Szybkie dodawanie składnika");
+    var ele_input = document.createElement("input");
+    var ele_button = document.createElement("button");
+    var ele_button_text = document.createTextNode("Prześlij");
+
+    element.className = "row";
+    element.id = "dodawanie_skladnika";
+    element2.className = "col-12 fast";
+    ele_h4.appendChild(ele_h4_text);
+    element2.appendChild(ele_h4);
+    ele_input.name = "nazwa_skl";
+    ele_input.style.marginRight = "7px";
+    ele_input.id = "nazwa_skl";
+    ele_input.type = "text";
+    ele_input.placeholder = "Nazwa składnika";
+    element2.appendChild(ele_input);
+    element2.appendChild(sel_cln);
+    ele_button.id = "przeszli";
+    ele_button.style.marginLeft = "7px";
+    ele_button.className = "acc-skl";
+    ele_button.appendChild(ele_button_text);
+    element2.appendChild(ele_button);
+
+    element.appendChild(element2);
+    document.getElementById("parent_ing").after(element);
+}
+
+function test(){
+    var nazwa_skl = document.getElementById("nazwa_skl").value;
+    var grupa_skl = document.getElementById("grupa_skl").value;
+    $.ajax({
+        url: '/ajax/',
+        data: {
+            'message': 'I want an AJAX response',
+            'nazwa_skladnika': nazwa_skl,
+            'grupa_skladnika': grupa_skl
+        },
+        type: 'POST',
+        dataType: 'json',
+
+        success: function(data) {
+            if (data.is_valid){
+                var grupa = data.response;
+                if (grupa === "Bakalie")
+                    lista_Bakalie = (data.lista);
+                else if(grupa === "Jaja")
+                    lista_Jaja = (data.lista);
+                else if(grupa === "Mieso")
+                    lista_Mieso = (data.lista);
+                else if(grupa === "Owoce")
+                    lista_Owoce = (data.lista);
+                else if(grupa === "Produkty cukiernicze")
+                    lista_p_cukiernicze = (data.lista);
+                else if(grupa === "Produkty mleczne")
+                    ista_p_mleczne = (data.lista);
+                else if(grupa === "Produkty zbozowe")
+                    lista_p_zbozowe = (data.lista);
+                else if(grupa === "Przyprawy")
+                    lista_Przyprawy = (data.lista);
+                else if(grupa === "Ryby")
+                    lista_Ryby = (data.lista);
+                else if(grupa === "Suche nasiona straczkowe")
+                    lista_s_nasiona = (data.lista);
+                else if(grupa === "Tluszcze")
+                    lista_Tluszcze = (data.lista);
+                else if(grupa === "Warzywa")
+                    lista_Warzywa = (data.lista);
+                else if(grupa === "Wedliny")
+                    lista_Wedliny = (data.lista);
+            }
+            else {
+                alert(data.response);
+            }
+        }
+    });
+}
+
+
+var lista_Bakalie = {{ lista_Bakalie|safe }};
+var lista_Jaja = {{ lista_Jaja|safe }};
+var lista_Mieso = {{ lista_Mieso|safe }};
+var lista_Owoce = {{ lista_Owoce|safe }};
+var lista_p_cukiernicze = {{ lista_p_cukiernicze|safe }};
+var lista_p_mleczne = {{ lista_p_mleczne|safe }};
+var lista_p_zbozowe = {{ lista_p_zbozowe|safe }};
+var lista_Przyprawy = {{ lista_Przyprawy|safe }};
+var lista_Ryby = {{ lista_Ryby|safe }};
+var lista_s_nasiona = {{ lista_s_nasiona|safe }};
+var lista_Tluszcze = {{ lista_Tluszcze|safe }};
+var lista_Warzywa = {{ lista_Warzywa|safe }};
+var lista_Wedliny = {{ lista_Wedliny|safe }};
+
+
+var tab = [];
+var i;
+var licznik;
+for(i=0;i<20;i++){
+    if (i===0){
+        tab[i]=[i,"TF"];
+    }
+    else {
+        tab[i]=[i,"True"];
+    }
+}
+
+function wys_img(s1){
+    var x = document.getElementById("obrazek");
+    if (x === null){
+        var x = document.createElement("img");
+    }
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById("id_obraz").files[0];
+    var reader = new FileReader();
+    x.src = s2;
+    x.id = "obrazek";
+    x.style.height = "200px";
+    x.style.position = "static";
+    $(s1).before(x);
+
+    reader.addEventListener("load", function () {
+        x.src = reader.result;
+    }, false);
+    if(s2){
+        reader.readAsDataURL(s2);
+    }
+}
+
+function obsluga(s1,s2) {
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById(s2);
+    s2.innerHTML = "";
+    if(s1.value == "Bakalie"){
+        var optionArray = lista_Bakalie;
+    }
+    else if(s1.value == "Jaja"){
+        var optionArray = lista_Jaja;
+    }
+    else if(s1.value == "Mięso"){
+        var optionArray = lista_Mieso;
+    }
+    else if(s1.value == "Owoce"){
+        var optionArray = lista_Owoce;
+    }
+    else if(s1.value == "Produkty cukiernicze"){
+        var optionArray = lista_p_cukiernicze;
+    }
+    else if(s1.value == "Produkty mleczne"){
+        var optionArray = lista_p_mleczne;
+    }
+    else if(s1.value == "Produkty zbożowe"){
+        var optionArray = lista_p_zbozowe;
+    }
+    else if(s1.value == "Przyprawy"){
+        var optionArray = lista_Przyprawy;
+    }
+    else if(s1.value == "Ryby"){
+        var optionArray = lista_Ryby;
+    }
+    else if(s1.value == "Suche nasiona strączkowe"){
+        var optionArray = lista_s_nasiona;
+    }
+    else if(s1.value == "Tłuszcze"){
+        var optionArray = lista_Tluszcze;
+    }
+    else if(s1.value == "Warzywa"){
+        var optionArray = lista_Warzywa;
+    }
+    else if(s1.value == "Wędliny"){
+        var optionArray = lista_Wedliny;
+    }
+
+    for(var option in optionArray){
+        var pair = optionArray[option].split("|");
+        var newOption = document.createElement("option");
+        newOption.value = pair[0];
+        newOption.innerHTML = pair[1];
+        s2.options.add(newOption);
+    }
+}
+
+function updateElementIndex(el, prefix, ndx, len) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    var len = len;
+    var name = $(el).attr('name');
+    var id = el.id.replace(id_regex, replacement);
+    var regexp = /form-\d*-skladnik/;
+    if (el.name==="grupa"){
+        for(i=0;i<tab.length;i++){
+            if (tab[i][1]==="TF"){
+                tab[i][1] = "False";
+                licznik = tab[i][0];
+                var id = 'id_' + name+ licznik;
+                var id2 = 'id_pip' + licznik;
+                tab[len][1] = "True";
+                $(el).attr("onchange", "obsluga(this.id,'"+id2+"')");
+                break;
+            }
+        }
+    }
+    if (regexp.exec(el.name)!== null){
+            var id = 'id_pip' + licznik;
+    }
+    el.id = id;
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    var licznik = $('#id_' + prefix + '-TOTAL_FORMS').val();
+
+    for(i=0;i<tab.length;i++){
+        if (tab[i][1]==="True"){
+            tab[i][1] = "TF";
+            licznik = tab[i][0];
+            break;
+        }
+    }
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name')
+        if(name) {
+            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name+ licznik;
+            var id2 = 'id_pip' + licznik;
+            if (name == 'grupa') {
+                $(this).attr({'name': name, 'id': id,'onchange':"obsluga(this.id,'"+id2+"')"}).val('').removeAttr('checked');
+            }
+            else if(/form-\d*-skladnik/.test(name)) {
+                var newselect = document.createElement("select");
+                newselect.id = id2;
+                newselect.name = "form-"+licznik+"-skladnik";
+                newselect.required = true;
+                $(this).after(newselect);
+                $(this).remove()
+            }
+            else if(/form-\d*-ilosc/.test(name)) {
+                name = "form-"+licznik+"-ilosc";
+                id = "id_"+name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+            else if(/form-\d*-waga/.test(name)) {
+                name = "form-"+licznik+"-waga";
+                id = "id_"+name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            }
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.ing:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('-');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        var forms = $('.ing');
+        btn.closest('.ing').remove();
+        var forms = $('.ing');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i,forms.length);
+            });
+        }
+    }
+    for(i=0;i<tab.length;i++){
+        if (tab[i][1]==="False"){
+            tab[i][1] = "TF";
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.ing:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+$(document).on('click', '.add-skl', function(e){
+    e.preventDefault();
+    fastskl();
+    return false;
+});
+$(document).on('click', '.acc-skl', function(e){
+    e.preventDefault();
+    test();
+    return false;
+});
+</script>
+{% endblock %}
