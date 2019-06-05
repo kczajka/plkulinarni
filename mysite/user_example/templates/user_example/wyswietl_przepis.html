@@ -1,0 +1,421 @@
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dodaj_przepis' %}">Stwórz przepis</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container" id="showRecipe">
+    <div class="row">
+        <div class="col-12 header text-center">
+            <h1>{{ przepis.nazwa }}</h1>
+        </div>
+    </div>
+    <section>
+        <div class="row">
+            <div class="col-6">
+                <ul>
+                    {% for item in skladniki %}
+                    <li>
+                        {{ item|safe }}
+                        {{ item.waga.value }}
+                        {{ item.skladnik }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-6 showImg">
+                <img alt="danie" src="http://127.0.0.1:8000/{{ przepis.obraz }}"/>
+            </div>
+        </div>
+    </section>
+    <article>
+        <div class="row">
+            <div class="col-12">
+                <p>{{ przepis.opis }}</p>
+            </div>
+            <div class="col-12 author">
+                <em>{{ przepis.author }}</em>
+            </div>
+        </div>
+    </article>
+    {% if user.username == przepis.author|safe %}
+    <form method="POST">
+        {% csrf_token %}
+        <button id="Przycisk" name=
+                    {% if testowy == 1 %}
+                        "edit2"
+                    {% else %}
+                        "edit"
+                    {% endif %}
+
+                value=
+                    {% if aktiv == 1 %}
+                        {{ przepis.edycja }}
+                    {% else %}
+                        {{ przepis.id }}
+                    {% endif %}
+        >Edytuj</button>
+        {% if aktiv == 1 %}
+            <button name="delete" value={{ przepis.id }}>Usuń</button>
+        {% endif %}
+        <button name="like_przepis" id="like_przepis" class="btn btn-primary like-przepis" style="float: right">Like</button>
+    </form>
+    {% endif %}
+
+    <section id="koment_section">
+        <div class="row addComment">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="add">Napisz komentarz</label>
+                    <textarea name="opis" class="form-control" id="tresc_kom" rows="3"></textarea>
+                </div>
+                <button name="add_comment" class="btn btn-primary" onclick="addkoment()">Dodaj</button>
+                <button type="button" class="btn btn-danger">Usuń</button>
+            </div>
+        </div>
+    {% for kom in komentarze %}
+        <div id=glowny{{ kom.id }}>
+        <div class="row comment" id=com{{ kom.id }}>
+            <div class="col-3 commentOwner">
+                {% if kom.aktywny == False %}
+                    <em style="color: red;">{{ kom.author }}</em>
+                {% else %}
+                    <em>{{ kom.author }}</em>
+                {% endif %}
+            </div>
+            <div class="col-9 commentText">
+                <p>{{ kom.tresc }}</p>
+                {% if kom.aktywny == False %}
+                <i class="fa fa-thumbs-up"><em></em></i>
+                <i class="fa fa-thumbs-down"><em></em></i>
+                {% else %}
+                <i class="fa fa-thumbs-up" id="com{{ kom.id }}_like" onclick="clicklike(this.id, {{ kom.id }})"><em>
+                    {% if kom.likes.count != 0 %}
+                        {{ kom.likes.count }}
+                    {% endif %}
+                </em></i>
+                <i class="fa fa-thumbs-down" id="com{{ kom.id }}_dislike" onclick="clicklike(this.id, {{ kom.id }})"><em>
+                    {% if kom.dislikes.count != 0 %}
+                        {{ kom.dislikes.count }}
+                    {% endif %}
+                </em></i>
+                <i class="fa fa-reply" id="odp_v1" onclick="addpodkommentokno(this.id, {{ kom.id }})"><em></em></i>
+                {% endif %}
+            </div>
+        </div>
+        {% if kom.czykomentarze == True %}
+            {% for komdd in komentdodat %}
+                {% if kom.id == komdd.idkomentarza %}
+                    <div class="row reply">
+                        <div class="col-2 offset-1 commentOwner">
+                            {% if komdd.aktywny == False %}
+                                <em style="color: red;">{{ komdd.author }}</em>
+                            {% else %}
+                                <em>{{ komdd.author }}</em>
+                            {% endif %}
+                        </div>
+                        <div class="col-8 offset-1 commentText">
+                            <p>{{ komdd.tresc }}</p>
+                            {% if komdd.aktywny == False %}
+                            <i class="fa fa-thumbs-up"><em></em></i>
+                            <i class="fa fa-thumbs-down"><em></em></i>
+                            {% else %}
+                            <i class="fa fa-thumbs-up" id="com{{ komdd.id }}_like" onclick="clicklike(this.id, {{ komdd.id }})"><em>
+                                {% if komdd.likes.count != 0 %}
+                                    {{ komdd.likes.count }}
+                                {% endif %}
+                            </em></i>
+                            <i class="fa fa-thumbs-down" id="com{{ komdd.id }}_dislike" onclick="clicklike(this.id, {{ komdd.id }})"><em>
+                                {% if komdd.dislikes.count != 0 %}
+                                    {{ komdd.dislikes.count }}
+                                {% endif %}
+                            </em></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+            </div>
+    {% endfor %}
+    </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" >
+function clicklike(selector, id){
+    var regexp = /com\d*_like/;
+    if (regexp.exec(selector)!== null)
+        var opcja = "like";
+    else
+        var opcja = "dislike";
+    $.ajax({
+        url: '/ajaxkkl/',
+        data: {
+            'id_koment': id,
+            'opcja': opcja
+        },
+        type: 'POST',
+        dataType: 'json',
+
+        success: function(data) {
+            if (data.is_valid){
+                if (data.opcja==="removelike"){
+                    var forma = "com"+id+"_like";
+                    var a = document.getElementById(forma);
+                    a.style.color = null;
+                    if (data.liczbalike===0)
+                        a.firstChild.firstChild.nodeValue = null;
+                    else
+                        a.firstChild.firstChild.nodeValue = data.liczbalike;
+                }
+                else if(data.opcja.includes("addlike")){
+                    var forma = "com"+id+"_like";
+                    var a = document.getElementById(forma);
+                    a.style.color = "blue";
+                    if (data.liczbalike===0)
+                        a.firstChild.firstChild.nodeValue = null;
+                    else
+                        a.firstChild.firstChild.nodeValue = data.liczbalike;
+                    if (data.opcja==="addlike_dislike"){
+                        var forma2 = "com"+id+"_dislike";
+                        var b = document.getElementById(forma2);
+                        b.style.color = null;
+                        if (data.liczbadislike===0)
+                            b.firstChild.firstChild.nodeValue = null;
+                        else
+                            b.firstChild.firstChild.nodeValue = data.liczbadislike;
+                    }
+                }
+                else if(data.opcja==="removedislike"){
+                    var forma = "com"+id+"_dislike";
+                    var a = document.getElementById(forma);
+                    a.style.color = null;
+                    if (data.liczbadislike===0)
+                        a.firstChild.firstChild.nodeValue = null;
+                    else
+                        a.firstChild.firstChild.nodeValue = data.liczbadislike;
+                }
+                else if(data.opcja.includes("adddislike")){
+                    var forma = "com"+id+"_dislike";
+                    var a = document.getElementById(forma);
+                    a.style.color = "blue";
+                    if (data.liczbadislike===0)
+                        a.firstChild.firstChild.nodeValue = null;
+                    else
+                        a.firstChild.firstChild.nodeValue = data.liczbadislike;
+                    if (data.opcja==="adddislike_like"){
+                        var forma2 = "com"+id+"_like";
+                        var b = document.getElementById(forma2);
+                        b.style.color = null;
+                        if (data.liczbalike===0)
+                            b.firstChild.firstChild.nodeValue = null;
+                        else
+                            b.firstChild.firstChild.nodeValue = data.liczbalike;
+                    }
+                }
+            }
+            else {
+                alert("anty-SPAM");
+            }
+        }
+    });
+}
+
+function addkoment(){
+    var kom_text = document.getElementById("tresc_kom");
+    $.ajax({
+        url: '/ajaxkk/',
+        data: {
+            'przepis': {{ przepis.id }},
+            'koment': kom_text.value
+        },
+        type: 'POST',
+        dataType: 'json',
+
+        success: function(data) {
+            if (data.is_valid){
+                var kom_text = data.koment;
+                var element = document.createElement("div");
+                var element2 = document.createElement("div");
+                var element3 = document.createElement("div");
+                var ele_em = document.createElement("em");
+                var ele_p = document.createElement("p");
+                var ele_text = document.createTextNode(data.author);
+                var ele_p_text = document.createTextNode(data.koment);
+
+                element.className = "row comment";
+                element2.className = "col-3 commentOwner";
+                ele_em.appendChild(ele_text);
+                element2.appendChild(ele_em);
+                element.appendChild(element2);
+
+                element3.className = "col-9 commentText";
+                ele_p.appendChild(ele_p_text);
+                element3.appendChild(ele_p);
+                element.appendChild(element3);
+
+                document.getElementById('koment_section').appendChild(element);
+
+                document.getElementById('tresc_kom').value = '';
+
+            }
+            else {
+                alert("anty-SPAM");
+            }
+        }
+    });
+}
+
+function addpodkommentokno(selector, id){
+    var spr_add = document.getElementById('addcommit');
+    if (spr_add !== null){
+        spr_add.remove();
+    }
+
+    var kom_glowny = document.getElementById(selector);
+    var id = id;
+    var element = document.createElement("div");
+    var element2 = document.createElement("div");
+    var element3 = document.createElement("div");
+    var element4 = document.createElement("div");
+    var element5 = document.createElement("div");
+    var element6 = document.createElement("div");
+    var ele_em = document.createElement("em");
+    var ele_textarea = document.createElement("textarea");
+    var ele_em_text = document.createTextNode("{{ user.username }}");
+    var ele_label = document.createElement("label");
+    var ele_label_text = document.createTextNode("Napisz komentarz");
+    var ele_button_add = document.createElement("button");
+    var ele_button_add_text = document.createTextNode("Dodaj");
+    var ele_button_del = document.createElement("button");
+    var ele_button_del_text = document.createTextNode("Usuń");
+
+    element.className = "row reply";
+    element.id = "addcommit";
+    element2.className = "col-2 offset-1 commentOwner";
+    ele_em.appendChild(ele_em_text);
+    element2.appendChild(ele_em);
+    element.appendChild(element2);
+    element3.className = "col-8 offset-1 commentText";
+    element4.className = "row addComment";
+    element5.className = "col-12";
+    element6.className = "form-group";
+    ele_label.appendChild(ele_label_text);
+    element6.appendChild(ele_label);
+    ele_textarea.className = "form-control";
+    ele_textarea.id = "tresc_pkom";
+    ele_textarea.rows = 3;
+    element6.appendChild(ele_textarea);
+    element5.appendChild(element6);
+    ele_button_add.className = "btn btn-primary";
+    ele_button_add.setAttribute('onclick',"addpodkoment ('"+id+"');");
+    ele_button_add.appendChild(ele_button_add_text);
+    element5.appendChild(ele_button_add);
+    ele_button_del.className = "btn btn-danger";
+    ele_button_del.setAttribute('onclick',"usun();");
+    ele_button_del.appendChild(ele_button_del_text);
+    element5.appendChild(ele_button_del);
+    element4.appendChild(element5);
+    element3.appendChild(element4);
+    element.appendChild(element3);
+
+    document.getElementById('glowny'+id).appendChild(element);
+}
+
+function addpodkoment(zmienna){
+    var kom_text = document.getElementById("tresc_pkom");
+    $.ajax({
+        url: '/ajaxpk/',
+        data: {
+            'przepis': {{ przepis.id }},
+            'koment': kom_text.value,
+            'komentarz': zmienna,
+        },
+        type: 'POST',
+        dataType: 'json',
+
+        success: function(data) {
+            if (data.is_valid){
+                var kom_text = data.koment;
+                var id = id;
+                var element = document.createElement("div");
+                var element2 = document.createElement("div");
+                var element3 = document.createElement("div");
+                var ele_em = document.createElement("em");
+                var ele_p = document.createElement("p");
+                var ele_em_text = document.createTextNode(data.author);
+                var ele_p_text = document.createTextNode(data.koment);
+
+                element.className = "row reply";
+                element2.className = "col-2 offset-1 commentOwner";
+                ele_em.appendChild(ele_em_text);
+                element2.appendChild(ele_em);
+                element.appendChild(element2);
+                element3.className = "col-8 offset-1 commentText";
+                ele_p.appendChild(ele_p_text);
+                element3.appendChild(ele_p);
+                element.appendChild(element3);
+
+                document.getElementById('glowny'+zmienna).appendChild(element);
+                document.getElementById('addcommit').remove();
+            }
+            else {
+                alert("anty-SPAM");
+            }
+        }
+    });
+}
+
+function usun(){
+    document.getElementById('addcommit').remove();
+}
+$(document).on('click', '.like-przepis', function(e){
+    e.preventDefault();
+    alert("ala");
+    return false;
+});
+$(document).ready(function(){
+    var lista = {{ czylike }};
+    var lista2 = {{ czydislike }};
+    for(var ele in lista){
+        var forma = "com"+lista[ele]+"_like";
+        var a = document.getElementById(forma);
+        a.style.color = "blue";
+    }
+    for(var ele in lista2){
+        var forma = "com"+lista2[ele]+"_dislike";
+        var a = document.getElementById(forma);
+        a.style.color = "blue";
+    }
+});
+</script>
+{% endblock %}
