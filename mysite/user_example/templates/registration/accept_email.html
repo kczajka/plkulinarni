@@ -1,0 +1,15 @@
+{% extends 'registration/base.html' %}
+
+{% block login %}
+<div class="container text-center" id="log">
+    <div class="col-12">
+        <h1>Potwierdź email</h1>
+    </div>
+
+    <form method="post" action="{% url 'login/' %}">
+        <div class="form-group">
+            <p>Na Twój adres email został wysłany link aktywacyjny.</p>
+        </div>
+    </form>
+</div>
+{% endblock %}
