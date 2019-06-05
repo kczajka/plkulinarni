@@ -1,0 +1,110 @@
+{% extends 'user_example/index_glowny.html' %}
+{% block zaloguj %}
+{% if user.is_authenticated %}
+
+    <div class="wrapper">
+        <span>{{ user.username }}</span>
+        <i class="fa fa-address-card"></i>
+        <div class="box text-center">
+            <a href="{% url 'moje_konto' %}"><p>Moje konto</p></a>
+            <a href="{% url 'change_password' %}"><p>Zmiana hasła</p></a>
+            <a href="{% url 'logout' %}"><p>Wyloguj</p></a>
+        </div>
+    </div>
+    {% else %}
+    <span><a href="{% url 'login' %}">Zaloguj</a></span>
+    {% endif %}
+
+{% endblock %}
+
+{% block menu %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'baza_skladnikow' %}">Baza składników</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'wyswietl_przepisy' %}">Przepisy</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dodaj_przepis' %}">Stwórz przepis</a>
+    </li>
+{% endblock %}
+
+{% block glowny %}
+<div class="container-fluid text-center" id="creator">
+    <form class="tworzenie_przepisow" method="POST" action="" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <h1>Dodaj składnik</h1>
+                    <p>W tej zakładce możesz dodać składnik</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 recipeName">
+                        <label for="id_nazwa"></label>
+                        {{form.nazwa}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 recipeName">
+                        <label for="id_grupa">Kategoria: </label>
+                        {{form.grupa}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text">
+                        <label for="id_opis"></label>
+                        {{form.opis}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text">
+                        <label for="id_zastosowanie"></label>
+                        {{form.zastosowanie}}
+                </div>
+            </div>
+            <div class="file">
+                <div class="col-12">
+                    <label for="id_obraz"></label>
+                    <input type="file" name="obraz" accept="image/*" id="id_obraz" onchange="wys_img(this.id)">
+                </div>
+            </div>
+            <button id="add">Dodaj</button>
+        </section>
+    </form>
+    {% for field in form %}
+        {{ field.errors|striptags }}
+    {% endfor %}
+    {% for field in form2 %}
+        {{ field.errors|striptags }}
+    {% endfor %}
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript" >
+function wys_img(s1){
+    var x = document.getElementById("obrazek");
+    if (x === null){
+        var x = document.createElement("img");
+    }
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById("id_obraz").files[0];
+    var reader = new FileReader();
+    x.src = s2;
+    x.id = "obrazek";
+    x.style.height = "200px";
+    x.style.position = "static";
+    $(s1).before(x);
+
+    reader.addEventListener("load", function () {
+        x.src = reader.result;
+    }, false);
+    if(s2){
+        reader.readAsDataURL(s2);
+    }
+}
+</script>
+{% endblock %}
